@@ -8,7 +8,7 @@ const Tab = createMaterialTopTabNavigator();
 const TabNavigator = () => {
     return (
         <Tab.Navigator screenOptions={{
-            tabBarLabelStyle: {textTransform:'none'},
+            tabBarLabelStyle: {textTransform:'none',fontSize:14},
             tabBarStyle:{height:60, justifyContent:'center'}
         }}
         >
