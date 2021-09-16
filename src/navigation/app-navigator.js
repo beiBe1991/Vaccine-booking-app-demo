@@ -11,12 +11,23 @@ const authStack = createStackNavigator(
     }
 )
 
+const appStack = createStackNavigator(
+    {
+        ...Routes.appRoute
+    },
+    {
+        headerMode:'screen',
+    }
+  
+)
+
 
 
 const navigator = createAppContainer(
     createSwitchNavigator(
         {
             auth: authStack,
+            app: appStack
         },
         {
             initialRouteName:'auth'
