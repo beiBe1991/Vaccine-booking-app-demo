@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput } from 'react-native'
-import EditText from "../components/text-input-custom";
-import AppButton from "../components/app-button";
+import EditText from "../shared-components/text-input-custom";
+import AppButton from "../shared-components/app-button";
 import { Colors } from '../app-constants/themes'
 import { connect } from 'react-redux'
 import { requestLogin } from '../actions/auth-actions'
@@ -135,7 +135,7 @@ class LoginScreen extends React.Component {
     componentDidUpdate = prevProps => {
         if (this.props.loginResponse != prevProps.loginResponse && this.props.loginResponse != undefined) {
             if (this.props.loginResponse.success) {
-                this.props.navigation.navigate('app')
+                this.props.navigation.navigate('app',{name:'Kottayam'})
             }
         }
     }
