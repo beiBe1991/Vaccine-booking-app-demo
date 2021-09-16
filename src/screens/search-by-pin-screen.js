@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import EditText from "../shared-components/text-input-custom";
 import AppButton from "../shared-components/app-button";
 
