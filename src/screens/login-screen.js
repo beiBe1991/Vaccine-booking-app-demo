@@ -3,14 +3,76 @@ import { View, Text, StyleSheet, TextInput } from 'react-native'
 import EditText from "../components/text-input-custom";
 import AppButton from "../components/app-button";
 import { Colors } from '../app-constants/themes'
+import { connect } from 'react-redux'
+import { requestLogin } from '../actions/auth-actions'
 
 class LoginScreen extends React.Component {
+
+    constructor(props) {
+        super()
+        this.state = {
+            email: '',
+            password: '',
+            isButtonDisabled: true,
+            isEditable: false
+        }
+    }
+
 
     BlankSpace = (spaceUnit) => {
         return (
             <View style={{ padding: spaceUnit }} />
         )
     }
+
+    onEmailChange = (email) => {
+        this.setState({
+            email
+        }, () => this.enablePassword(email))
+    }
+
+
+    enablePassword = (email) => {
+        let emailAddress = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (emailAddress.test(email) === true) {
+            this.setState({
+                isEditable: true
+            })
+        } else {
+            this.setState({
+                isEditable: false
+            })
+        }
+    }
+
+
+    onPasswordChange = (password) => {
+        this.setState({
+            password
+        }, () => this.enableButton())
+    }
+
+
+    enableButton = () => {
+        if (this.state.password.length != 0 && this.state.email.length != 0) {
+            this.setState({
+                isButtonDisabled: false
+            })
+        } else {
+            this.setState({
+                isButtonDisabled: true
+            })
+        }
+    }
+
+    onPressLogin = () => {
+        let payload = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        this.props.onLogin(payload)
+    }
+
 
     render() {
         return (
@@ -25,6 +87,8 @@ class LoginScreen extends React.Component {
                     secure={false}
                     autoCorrect={false}
                     type={'default'}
+                    isEditable={true}
+                    onChange={this.onEmailChange}
                 />
 
                 {this.BlankSpace(13)}
@@ -35,17 +99,42 @@ class LoginScreen extends React.Component {
                     autoCorrect={false}
                     type={'default'}
                     icon={true}
+                    isEditable={this.state.isEditable}
+                    onChange={this.onPasswordChange}
                 />
 
                 {this.BlankSpace(20)}
 
                 <AppButton
                     title={'Log in'}
-                    
+                    disabled={this.state.isButtonDisabled}
+                    onPress={this.onPressLogin}
                 />
 
             </View>
         )
+    }
+
+    componentDidUpdate = prevProps => {
+        if (this.props.loginResponse != prevProps.loginResponse && this.props.loginResponse != undefined) {
+            if (this.props.loginResponse.success) {
+                this.props.navigation.navigate('app')
+            }
+        }
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        loginResponse: state.auth.loginResponse
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: (payload) => {
+            dispatch(requestLogin(payload))
+        }
     }
 }
 
@@ -68,4 +157,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default LoginScreen
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

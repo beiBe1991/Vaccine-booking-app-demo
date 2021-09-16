@@ -12,6 +12,8 @@ const EditText = (props) => {
                 secureTextEntry={props.secure}
                 autoCorrect={props.autoCorrect}
                 keyboardType={props.type}
+                editable={props.isEditable}
+                onChangeText={props.onChange}
             />
             <View style={styles.iconContainer}>
                 <TouchableOpacity>

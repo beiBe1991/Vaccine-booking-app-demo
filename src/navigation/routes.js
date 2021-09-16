@@ -1,4 +1,5 @@
 import LoginScreen from "../screens/login-screen";
+import HomeScreen from "../screens/home-screen";
 
 const Routes = {
     authRoute: {
@@ -6,7 +7,11 @@ const Routes = {
             screen: LoginScreen
         }
     },
-    appRoute:{}
+    appRoute: {
+        home: {
+            screen: HomeScreen
+        }
+    }
 }
 
 export default Routes
