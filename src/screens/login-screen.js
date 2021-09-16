@@ -22,7 +22,7 @@ class LoginScreen extends React.Component {
 
                 <EditText
                     title={'Email Address'}
-                    secure={true}
+                    secure={false}
                     autoCorrect={false}
                     type={'default'}
                 />
@@ -41,6 +41,7 @@ class LoginScreen extends React.Component {
 
                 <AppButton
                     title={'Log in'}
+                    
                 />
 
             </View>
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     },
     welcomeTextStyle: {
         color: Colors.primaryTextColor,
-        fontSize: 30
+        fontSize: 30,
     },
     subheadingStyle: {
         color: Colors.primaryTextColor,
