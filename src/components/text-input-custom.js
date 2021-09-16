@@ -16,7 +16,10 @@ const EditText = (props) => {
                 onChangeText={props.onChange}
             />
             <View style={styles.iconContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPressIn ={props.onPressIn}
+                    onPressOut ={props.onPressOut}
+                >
                     {props.icon ?
                         <FontAwsome
                             size={20}
