@@ -135,7 +135,7 @@ class LoginScreen extends React.Component {
     componentDidUpdate = prevProps => {
         if (this.props.loginResponse != prevProps.loginResponse && this.props.loginResponse != undefined) {
             if (this.props.loginResponse.success) {
-                this.props.navigation.navigate('app',{name:'Kottayam'})
+                this.props.navigation.navigate('app')
             }
         }
     }

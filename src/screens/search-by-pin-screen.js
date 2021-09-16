@@ -1,18 +1,46 @@
 import React from "react";
 import { View, Text, StyleSheet } from 'react-native'
-import { Colors } from "../app-constants/themes";
-const SearchByPinScreen = () => {
-    return (
-        <View>
-            <Text>Search By Pin Screen</Text>
-        </View>
-    )
+import EditText from "../shared-components/text-input-custom";
+import AppButton from "../shared-components/app-button";
+
+class SearchByPinScreen extends React.Component {
+
+    onPinChange = () => { }
+
+    onPressSearch = () => { }
+
+    render() {
+        return (
+            <View style={styles.mainContainer}>
+                <View style={styles.textInputContainer}>
+                    <EditText
+                        title={'Pincode'}
+                        secure={false}
+                        autoCorrect={false}
+                        type={'default'}
+                        isEditable={true}
+                        onChange={this.onPinChange}
+                    />
+                </View>
+
+                <AppButton
+                    title={'Search'}
+                    disabled={false}
+                    onPress={this.onPressSearch}
+                />
+
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
-        backgroundColor: Colors.primaryColor,
-        flex:1
+        padding: 30,
+        flex: 1
+    },
+    textInputContainer: {
+        flex: 1
     }
 })
 
