@@ -16,11 +16,14 @@ const appStack = createStackNavigator(
         ...Routes.appRoute
     },
     {
-        headerMode:'screen',
-    }
-  
+        headerMode: 'screen',
+        defaultNavigationOptions: {
+            headerStyle: {
+                height: 120,
+            },
+        },
+    },
 )
-
 
 
 const navigator = createAppContainer(
@@ -30,7 +33,7 @@ const navigator = createAppContainer(
             app: appStack
         },
         {
-            initialRouteName:'auth'
+            initialRouteName: 'app',
         }
     )
 )
