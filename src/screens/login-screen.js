@@ -14,7 +14,8 @@ class LoginScreen extends React.Component {
             email: '',
             password: '',
             isButtonDisabled: true,
-            isEditable: false
+            isEditable: false,
+            secure: true,
         }
     }
 
@@ -73,6 +74,20 @@ class LoginScreen extends React.Component {
         this.props.onLogin(payload)
     }
 
+    onEyePressIn = () => {
+        console.log('press in')
+        this.setState({
+            secure: false
+        })
+    }
+
+    onEyePressOut = () => {
+        console.log('press out')
+        this.setState({
+            secure: true
+        })
+    }
+
 
     render() {
         return (
@@ -95,12 +110,14 @@ class LoginScreen extends React.Component {
 
                 <EditText
                     title={'Password'}
-                    secure={true}
+                    secure={this.state.secure}
                     autoCorrect={false}
                     type={'default'}
                     icon={true}
                     isEditable={this.state.isEditable}
                     onChange={this.onPasswordChange}
+                    onPressIn={this.onEyePressIn}
+                    onPressOut={this.onEyePressOut}
                 />
 
                 {this.BlankSpace(20)}
