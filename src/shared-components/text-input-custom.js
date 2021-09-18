@@ -14,11 +14,15 @@ const EditText = (props) => {
                 keyboardType={props.type}
                 editable={props.isEditable}
                 onChangeText={props.onChange}
+                maxLength={props.maxLength}
+                onTouchStart={props.onTouchStart}
+                autoCapitalize = {props.autoCapitalize}
+                value = {props.value}
             />
             <View style={styles.iconContainer}>
                 <TouchableOpacity
-                    onPressIn ={props.onPressIn}
-                    onPressOut ={props.onPressOut}
+                    onPressIn={props.onPressIn}
+                    onPressOut={props.onPressOut}
                 >
                     {props.icon ?
                         <FontAwsome

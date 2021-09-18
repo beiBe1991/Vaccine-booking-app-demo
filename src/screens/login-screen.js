@@ -75,14 +75,12 @@ class LoginScreen extends React.Component {
     }
 
     onEyePressIn = () => {
-        console.log('press in')
         this.setState({
             secure: false
         })
     }
 
     onEyePressOut = () => {
-        console.log('press out')
         this.setState({
             secure: true
         })
