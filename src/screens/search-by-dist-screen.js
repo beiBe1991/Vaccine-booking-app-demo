@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import EditText from "../shared-components/text-input-custom";
 import AppButton from "../shared-components/app-button";
 import { Colors } from "../app-constants/themes";
@@ -28,11 +28,13 @@ class SearchByDistScreen extends React.Component {
     }
 
 
+
     onPressSearch = () => {
         let payload = {
             district_id: this.state.selectedDist.district_id
         }
         this.props.onSearch(payload)
+        this.props.navigation.navigate('centres',{title:this.state.selectedDist.district_name})
     }
 
 
@@ -182,6 +184,9 @@ class SearchByDistScreen extends React.Component {
             </View>
         )
     }
+
+    componentDidMount = ()=>{ }
+
     componentDidUpdate = prevProps => {
         if (this.props.distList != prevProps.distList && Object.keys(this.props.distList).length != 0) {
             if (this.props.distList.success) {
@@ -191,13 +196,18 @@ class SearchByDistScreen extends React.Component {
                 })
             }
         }
+        if (this.props.centresList != prevProps.centresList && Object.keys(this.props.centresList).length != 0) {
+            // navite from here if you want to wait for the api response
+        
+        }
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         stateList: state.states.stateList,
-        distList: state.districts.distList
+        distList: state.districts.distList,
+        centresList: state.centre.centresList
     }
 }
 

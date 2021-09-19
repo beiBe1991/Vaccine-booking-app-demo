@@ -22,10 +22,10 @@ function* requestCentreByPin({ payload }) {
         if (response.hasOwnProperty('centers')) {
             yield put({ type: REQUEST_CENTRE_SUCCESS, centres: { success: true, data: response.centers, time: new Date() } })
         } else {
-            yield put({ type: REQUEST_CENTRE_BY_PIN_FAILED, centers: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
+            yield put({ type: REQUEST_CENTRE_BY_PIN_FAILED, centres: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
         }
     } catch (error) {
-        yield put({ type: REQUEST_CENTRE_BY_PIN_FAILED, centers: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
+        yield put({ type: REQUEST_CENTRE_BY_PIN_FAILED, centres: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
     }
 }
 
@@ -35,10 +35,10 @@ function* requestCentreByDist({ payload }) {
         if (response.hasOwnProperty('centers')) {
             yield put({ type: REQUEST_CENTRE_SUCCESS, centres: { success: true, data: response.centers, time: new Date() } })
         } else {
-            yield put({ type: REQUEST_CENTRE_BY_DIST_FAILED, centers: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
+            yield put({ type: REQUEST_CENTRE_BY_DIST_FAILED, centres: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
         }
     } catch (error) {
-        yield put({ type: REQUEST_CENTRE_BY_DIST_FAILED, centers: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
+        yield put({ type: REQUEST_CENTRE_BY_DIST_FAILED, centres: { success: false, errorMsg: AppConstants.DEFAULT_ERROR_MESSAGE, time: new Date() } })
     }
 }
 

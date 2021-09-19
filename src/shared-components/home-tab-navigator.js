@@ -5,21 +5,22 @@ import SearchPin from '../screens/search-by-pin-screen'
 
 const Tab = createMaterialTopTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = (props) => {
+   
     return (
         <Tab.Navigator screenOptions={{
-            tabBarLabelStyle: {textTransform:'none',fontSize:14},
-            tabBarStyle:{height:60, justifyContent:'center'}
+            tabBarLabelStyle: { textTransform: 'none', fontSize: 14 },
+            tabBarStyle: { height: 60, justifyContent: 'center' }
         }}
         >
             <Tab.Screen
                 name='Search by pincode'
-                component={SearchPin}
-
+                children = {()=><SearchPin {...props}/>}
+               
             />
             <Tab.Screen
                 name='Search by district'
-                component={SearchDist}
+                children = {()=><SearchDist {...props}/>}
             />
         </Tab.Navigator>
     )

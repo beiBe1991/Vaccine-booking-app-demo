@@ -1,11 +1,11 @@
 import {
     REQUEST_CENTRE_SUCCESS,
     REQUEST_CENTRE_BY_DIST_FAILED,
-    REQUEST_CENTRE_BY_PIN_FAILED
+    REQUEST_CENTRE_BY_PIN_FAILED,
 } from '../actions/action-types'
 
 const INITIAL_STATE = {
-    centres: {},
+    centresList: {},
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,17 +13,17 @@ export default (state = INITIAL_STATE, action) => {
         case REQUEST_CENTRE_SUCCESS:
             return {
                 ...state,
-                centres: action.centres
+                centresList: action.centres
             }
         case REQUEST_CENTRE_BY_DIST_FAILED:
             return {
                 ...state,
-                centres: action.centres
+                centresList: action.centres
             }
         case REQUEST_CENTRE_BY_PIN_FAILED:
             return {
                 ...state,
-                centres: action.centres
+                centresList: action.centres
             }
         default: return state
     }

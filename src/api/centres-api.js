@@ -3,7 +3,7 @@ import { AppConstants } from "../app-constants/app-constants";
 export const CentresApi = {
 
     requestCentreByPin: async (payload) => {
-        return fetch(`${AppConstants.API_URL}/appointment/sessions/public/findByPin?pincode=${payload.pincode}&date=17-09-2021`, {
+        return fetch(`${AppConstants.API_URL}/appointment/sessions/public/findByPin?pincode=${payload.pincode}&date=20-09-2021`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
