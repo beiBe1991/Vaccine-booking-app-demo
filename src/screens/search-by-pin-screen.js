@@ -43,9 +43,10 @@ class SearchByPinScreen extends React.Component {
             pincode: this.state.pincode
         }
         this.props.searchByPin(payload)
+        this.props.navigation.navigate('centres', { title: this.state.pincode })
     }
 
-    
+
 
     render() {
         return (
@@ -63,7 +64,7 @@ class SearchByPinScreen extends React.Component {
                     />
                 </View>
 
-                
+
 
                 <AppButton
                     title={'Search'}
@@ -74,10 +75,18 @@ class SearchByPinScreen extends React.Component {
             </View>
         )
     }
+
+    componentDidUpdate = prevProps => {
+        if (this.props.centresList != prevProps.centresList && Object.keys(this.props.centresList).length != 0) {
+            // navite from here if you want to wait for the api response
+        }
+    }
 }
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        centresList: state.centre.centresList
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {

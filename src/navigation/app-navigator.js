@@ -1,4 +1,5 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import React from 'react'
 import { createStackNavigator } from 'react-navigation-stack'
 import Routes from './routes'
 
@@ -16,7 +17,7 @@ const appStack = createStackNavigator(
         ...Routes.appRoute
     },
     {
-        headerMode: 'screen',
+        headerMode: 'none',
         defaultNavigationOptions: {
             headerStyle: {
                 height: 120,
@@ -25,12 +26,11 @@ const appStack = createStackNavigator(
     },
 )
 
-
 const navigator = createAppContainer(
     createSwitchNavigator(
         {
             auth: authStack,
-            app: appStack
+            app: appStack,
         },
         {
             initialRouteName: 'app',

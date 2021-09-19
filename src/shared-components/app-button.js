@@ -4,7 +4,7 @@ import { Colors } from '../app-constants/themes'
 
 const AppButton = (props) => {
     return (
-        <View style={styles.mainContainer}>
+        <View style={props.width?[styles.mainContainer,{width:`${props.width}`}]:styles.mainContainer}>
             <TouchableOpacity
                 disabled={props.disabled}
                 onPress={props.onPress}
