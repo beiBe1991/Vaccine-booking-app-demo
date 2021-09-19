@@ -35,7 +35,6 @@ class CentresTodayScreen extends React.Component {
             mm = 0 + mm
         }
         let date = dd + '-' + mm + '-' + yy
-        console.log(date)
         return date
     }
 

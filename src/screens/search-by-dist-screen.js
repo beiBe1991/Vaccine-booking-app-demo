@@ -21,7 +21,8 @@ class SearchByDistScreen extends React.Component {
             selectedState: {},
             distsList: [],
             filteredDists: [],
-            selectedDist: {}
+            selectedDist: {},
+            isDispatchHappenedHere: false
 
         }
 
@@ -34,7 +35,10 @@ class SearchByDistScreen extends React.Component {
             district_id: this.state.selectedDist.district_id
         }
         this.props.onSearch(payload)
-        this.props.navigation.navigate('centres',{title:this.state.selectedDist.district_name})
+        this.setState({
+            isDispatchHappenedHere: true
+        })
+
     }
 
 
@@ -185,7 +189,7 @@ class SearchByDistScreen extends React.Component {
         )
     }
 
-    componentDidMount = ()=>{ }
+    componentDidMount = () => { }
 
     componentDidUpdate = prevProps => {
         if (this.props.distList != prevProps.distList && Object.keys(this.props.distList).length != 0) {
@@ -197,8 +201,13 @@ class SearchByDistScreen extends React.Component {
             }
         }
         if (this.props.centresList != prevProps.centresList && Object.keys(this.props.centresList).length != 0) {
-            // navite from here if you want to wait for the api response
-        
+            if (this.state.isDispatchHappenedHere) {
+                this.props.navigation.navigate('centres', { title: this.state.selectedDist.district_name })
+                this.setState({
+                    isDispatchHappenedHere: false
+                })
+            }
+
         }
     }
 }
