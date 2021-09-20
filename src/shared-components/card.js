@@ -11,9 +11,9 @@ const ItemCard = (props) => {
             <View style={{ padding: 5 }} />
 
             <View style={{ flexDirection: 'row' }}>
-                {renderCovaxinCount(props.item)}
+                {renderCovaxinCount(props.item, props.firstDose)}
                 <View style={{ padding: 10 }} />
-                {renderCovisheildCount(props.item)}
+                {renderCovisheildCount(props.item, props.firstDose)}
             </View>
 
         </View>
@@ -22,11 +22,11 @@ const ItemCard = (props) => {
 
 
 
-const renderCovisheildCount = (item) => {
+const renderCovisheildCount = (item, firstDose) => {
     return (
         <View style={{ alignItems: 'center' }}>
             <View style={covishieldCount(item.sessions) < 15 ? styles.vaccineCount : [styles.vaccineCount, { backgroundColor: Colors.safeGreen }]}>
-                <Text style={styles.countText}>{covishieldCount(item.sessions)}</Text>
+                <Text style={styles.countText}>{covishieldCount(item.sessions, firstDose)}</Text>
             </View>
             <View style={{ padding: 3 }} />
             <Text style={styles.addressStyle}>Covishield</Text>
@@ -34,11 +34,11 @@ const renderCovisheildCount = (item) => {
     )
 }
 
-const renderCovaxinCount = (item) => {
+const renderCovaxinCount = (item, firstDose) => {
     return (
         <View style={{ alignItems: 'center' }}>
             <View style={covaxinCount(item.sessions) < 15 ? styles.vaccineCount : [styles.vaccineCount, { backgroundColor: Colors.safeGreen }]}>
-                <Text style={styles.countText}>{covaxinCount(item.sessions)}</Text>
+                <Text style={styles.countText}>{covaxinCount(item.sessions, firstDose)}</Text>
             </View>
             <View style={{ padding: 3 }} />
             <Text style={styles.addressStyle}>Covaxin</Text>
@@ -46,17 +46,24 @@ const renderCovaxinCount = (item) => {
     )
 }
 
-const covaxinCount = (sessions) => {
-    return getVaccineCount(sessions, 'COVAXIN')
+const covaxinCount = (sessions, firstDose) => {
+    return getVaccineCount(sessions, 'COVAXIN', firstDose)
 }
-const covishieldCount = (sessions) => {
-    return getVaccineCount(sessions, 'COVISHIELD')
+const covishieldCount = (sessions, firstDose) => {
+    return getVaccineCount(sessions, 'COVISHIELD', firstDose)
 }
 
-const getVaccineCount = (sessions, vaccineName) => {
-    let filteredVaccines = sessions.filter(item => item.vaccine === vaccineName).map(item => item)
-    let count = filteredVaccines.map(item => item.available_capacity).reduce((prevCount, currentCount, index) => prevCount + currentCount, 0)
-    return count
+const getVaccineCount = (sessions, vaccineName,firstDose) => {
+    if (firstDose) {
+        let filteredVaccines = sessions.filter(item => item.vaccine === vaccineName).map(item => item)
+        let count = filteredVaccines.map(item => item.available_capacity_dose1).reduce((prevCount, currentCount, index) => prevCount + currentCount, 0)
+        return count
+    } else {
+        let filteredVaccines = sessions.filter(item => item.vaccine === vaccineName).map(item => item)
+        let count = filteredVaccines.map(item => item.available_capacity).reduce((prevCount, currentCount, index) => prevCount + currentCount, 0)
+        return count
+    }
+
 }
 
 const styles = StyleSheet.create({

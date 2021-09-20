@@ -4,26 +4,26 @@ import { Colors } from '../app-constants/themes'
 
 const CentreFilter = (props) => {
     return (
-        <View style={styles.mainContainer}>
-            <TouchableOpacity>
+        <View style={styles.mainContainer} pointerEvents={props.disabled?'none':'auto'}>
+            <TouchableOpacity onPress={props.onPressEighteen}>
                 <View style={styles.buttonStyle}>
                     <Text style={styles.textStyle}>18+</Text>
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress ={props.onPressFourtyFive}>
                 <View style={styles.buttonStyle}>
                     <Text style={styles.textStyle}>45+</Text>
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={props.onPressFree}>
                 <View style={styles.buttonStyle}>
                     <Text style={styles.textStyle}>Free</Text>
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress = {props.onPressPaid}>
                 <View style={styles.buttonStyle}>
                     <Text style={styles.textStyle}>Paid</Text>
                 </View>
@@ -36,7 +36,8 @@ const CentreFilter = (props) => {
                     thumbColor={Colors.primaryColor}
                     disabled={false}
                     onChange={props.onToggle}
-                    value={props.switchValue}
+                    value={props.switch}
+                    onValueChange={props.onToggleValueChange}
                 />
             </View>
 

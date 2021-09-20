@@ -13,16 +13,73 @@ class CentresWeekScreen extends React.Component {
         this.state = {
             isButtonDisabled: true,
             centreList: [],
-            switchValue: false
+            switch: false,
+            toggleValue: false,
+            isCentreFilterDisabled: true
         }
     }
 
     onPress = () => {
 
     }
+
     onChangeToggle = () => {
         this.setState({
-            switchValue: this.state.switchValue ? false : true
+            switch: this.state.switch ? false : true
+        })
+    }
+
+    onToggleValueChange = (value) => {
+        this.setState({
+            toggleValue: value
+        })
+    }
+
+    onPressEighteen = () => {
+
+        let eighteenList = [...this.props.centres.data].map(item => {
+            let filteredInner = item.sessions.reduce((filtered, session) => {
+                if (session.min_age_limit >= 18) {
+                    filtered.push(session)
+                }
+                return filtered
+            }, [])
+            return { ...item, sessions: filteredInner }
+        })
+        this.setState({
+            centreList: eighteenList
+        })
+    }
+
+
+    onPressFree = () => {
+        let freeList = [...this.props.centres.data].filter(item => item.fee_type === 'Free').map(item => item)
+        this.setState({
+            centreList: freeList
+        })
+    }
+
+    onPressPaid = () => {
+
+        let paidList = [...this.props.centres.data].filter(item => item.fee_type === 'Paid').map(item => item)
+        this.setState({
+            centreList: paidList
+        })
+    }
+
+    onPressFourtyFive = () => {
+
+        let fourtyList = [...this.props.centres.data].map(item => {
+            let filteredInner = item.sessions.reduce((filtered, session) => {
+                if (session.min_age_limit >= 45) {
+                    filtered.push(session)
+                }
+                return filtered
+            }, [])
+            return { ...item, sessions: filteredInner }
+        })
+        this.setState({
+            centreList: fourtyList
         })
     }
 
@@ -32,7 +89,13 @@ class CentresWeekScreen extends React.Component {
 
                 <CentreFilter
                     onToggle={this.onChangeToggle}
-                    switchValue={this.state.switchValue}
+                    switch={this.state.switch}
+                    onPressEighteen={this.onPressEighteen}
+                    onPressFree={this.onPressFree}
+                    onPressPaid={this.onPressPaid}
+                    onToggleValueChange={this.onToggleValueChange}
+                    onPressFourtyFive={this.onPressFourtyFive}
+                    disabled={this.state.isCentreFilterDisabled}
                 />
 
                 <View style={{ flex: 1, paddingBottom: 20 }}>
@@ -41,7 +104,7 @@ class CentresWeekScreen extends React.Component {
                         data={this.state.centreList}
                         renderItem={({ item }) => {
                             return (
-                                <ItemCard item={item} filterKey={'week'} />
+                                <ItemCard item={item} firstDose={this.state.toggleValue} />
                             )
                         }}
                         showsVerticalScrollIndicator={false}
@@ -60,7 +123,13 @@ class CentresWeekScreen extends React.Component {
     componentDidMount = () => {
         if (Object.keys(this.props.centres).length != 0 && this.props.centres.success) {
             this.setState({
-                centreList: this.props.centres.data
+                centreList: this.props.centres.data,
+                isCentreFilterDisabled: false
+
+            })
+        } else {
+            this.setState({
+                isCentreFilterDisabled: true
             })
         }
     }

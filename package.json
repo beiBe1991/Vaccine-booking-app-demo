@@ -7,6 +7,20 @@
     "web": "expo start --web",
     "eject": "expo eject"
   },
+  "expo": {
+    "name": "vaccine",
+    "icon": "./path/to/your/app-icon.png",
+    "version": "1.0.0",
+    "slug": "vaccine-app",
+    "ios": {
+      "bundleIdentifier": "com.alb.vaccine",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.alb.vaccine",
+      "versionCode": 1
+    }
+   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^6.0.5",
