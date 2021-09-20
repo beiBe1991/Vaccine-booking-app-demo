@@ -14,11 +14,13 @@ class CentresTodayScreen extends React.Component {
         this.state = {
             isButtonDisabled: true,
             centreList: [],
-            switchValue: false
+            switch: false,
+            toggleValue: false,
+            isCentreFilterDisabled:true
         }
     }
 
-    onPress = () => {
+    onPressButton = () => {
 
     }
 
@@ -28,20 +30,88 @@ class CentresTodayScreen extends React.Component {
         let yy = new Date().getFullYear()
 
         if (dd < 10) {
-            dd = 0 + dd
+            dd = '0' + dd
         }
 
         if (mm < 10) {
-            mm = 0 + mm
+            mm = '0' + mm
         }
         let date = dd + '-' + mm + '-' + yy
-        return date
+        return date.toString()
     }
 
     onChangeToggle = () => {
         this.setState({
-            switchValue: this.state.switchValue ? false : true
+            switch: this.state.switch ? false : true
         })
+    }
+
+    onToggleValueChange = (value) => {
+        this.setState({
+            toggleValue: value
+        })
+    }
+
+    onPressEighteen = () => {
+        let todayCentres = this.getTodayCentres(this.props.centres.data)
+        let eighteenList = [...todayCentres].map(item => {
+            let filteredInner = item.sessions.reduce((filtered, session) => {
+                if (session.min_age_limit >= 18) {
+                    filtered.push(session)
+                }
+                return filtered
+            }, [])
+            return { ...item, sessions: filteredInner }
+        })
+        this.setState({
+            centreList: eighteenList
+        })
+    }
+
+
+    onPressFree = () => {
+        let todayCentres = this.getTodayCentres(this.props.centres.data)
+        let freeList = [...todayCentres].filter(item => item.fee_type === 'Free').map(item => item)
+        this.setState({
+            centreList: freeList
+        })
+    }
+
+    onPressPaid = () => {
+        let todayCentres = this.getTodayCentres(this.props.centres.data)
+        let paidList = [...todayCentres].filter(item => item.fee_type === 'Paid').map(item => item)
+        this.setState({
+            centreList: paidList
+        })
+    }
+
+    onPressFourtyFive = () => {
+        let todayCentres = this.getTodayCentres(this.props.centres.data)
+        let fourtyList = [...todayCentres].map(item => {
+            let filteredInner = item.sessions.reduce((filtered, session) => {
+                if (session.min_age_limit >= 45) {
+                    filtered.push(session)
+                }
+                return filtered
+            }, [])
+            return { ...item, sessions: filteredInner }
+        })
+        this.setState({
+            centreList: fourtyList
+        })
+    }
+
+    getTodayCentres = (centres) => {
+        let todayCentres = [...centres].map(item => {
+            let filteredInner = item.sessions.reduce((filtered, session) => {
+                if (session.date === this.getCurrentDate()) {
+                    filtered.push(session)
+                }
+                return filtered
+            }, [])
+            return { ...item, sessions: filteredInner }
+        })
+        return todayCentres
     }
 
     render() {
@@ -50,7 +120,13 @@ class CentresTodayScreen extends React.Component {
 
                 <CentreFilter
                     onToggle={this.onChangeToggle}
-                    switchValue={this.state.switchValue}
+                    switch={this.state.switch}
+                    onPressEighteen={this.onPressEighteen}
+                    onPressFree={this.onPressFree}
+                    onPressPaid={this.onPressPaid}
+                    onToggleValueChange={this.onToggleValueChange}
+                    onPressFourtyFive = {this.onPressFourtyFive}
+                    disabled={this.state.isCentreFilterDisabled}
                 />
 
                 <View style={{ flex: 1, paddingBottom: 20 }}>
@@ -59,7 +135,7 @@ class CentresTodayScreen extends React.Component {
                         data={this.state.centreList}
                         renderItem={({ item }) => {
                             return (
-                                <ItemCard item={item} />
+                                <ItemCard item={item} firstDose={this.state.toggleValue} />
                             )
                         }}
                         showsVerticalScrollIndicator={false}
@@ -70,16 +146,35 @@ class CentresTodayScreen extends React.Component {
                 <AppButton
                     title={'Notify Me'}
                     disabled={this.state.isButtonDisabled}
-                    onPress={this.onPress}
+                    onPress={this.onPressButton}
                     width={'85%'}
                 />
             </View>
         )
     }
+
+
     componentDidMount = () => {
+        console.log(this.props.centres.success)
         if (Object.keys(this.props.centres).length != 0 && this.props.centres.success) {
+
+            let todayCentres = [...this.props.centres.data].map(item => {
+                let filteredInner = item.sessions.reduce((filtered, session) => {
+                    if (session.date === this.getCurrentDate()) {
+                        filtered.push(session)
+                    }
+                    return filtered
+                }, [])
+                return { ...item, sessions: filteredInner }
+            })
+
             this.setState({
-                centreList: this.props.centres.data
+                centreList: todayCentres,
+                isCentreFilterDisabled:false
+            })
+        }else{
+            this.setState({
+               isCentreFilterDisabled:true 
             })
         }
     }

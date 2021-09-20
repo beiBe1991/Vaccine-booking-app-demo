@@ -33,7 +33,7 @@ const navigator = createAppContainer(
             app: appStack,
         },
         {
-            initialRouteName: 'app',
+            initialRouteName: 'auth',
         }
     )
 )
